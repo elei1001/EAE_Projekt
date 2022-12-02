@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.eaeprojekt.R;
+
 public class AddActivity extends AppCompatActivity {
 
     EditText title_input, author_input, pages_input;

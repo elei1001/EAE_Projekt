@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eaeprojekt.R;
+
 public class UpdateActivity extends AppCompatActivity {
 
     EditText title_input, author_input, pages_input;
