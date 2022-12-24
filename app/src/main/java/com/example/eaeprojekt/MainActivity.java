@@ -50,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton author_button = findViewById(R.id.AuthorButton);
+        author_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AuthorSearch.class);
+                startActivity(intent);
+            }
+        });
+
         dbH = new DatabaseHelper(MainActivity.this);
         book_id = new ArrayList<>();
         book_title = new ArrayList<>();
