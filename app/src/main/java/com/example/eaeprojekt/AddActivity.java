@@ -1,9 +1,11 @@
 package com.example.eaeprojekt;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +22,18 @@ public class AddActivity extends AppCompatActivity {
         author_input = findViewById(R.id.author_input);
         pages_input = findViewById(R.id.pages_input);
         add_button = findViewById(R.id.add_button);
+        ImageView image = (ImageView) findViewById(R.id.AddActivityBookCover);
+        Context context = this;
+        title_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!title_input.getText().toString().isEmpty()&&pages_input.getText().toString().isEmpty()&&author_input.getText().toString().isEmpty()) {
+                    BookTitleRestRequestor requestor = new BookTitleRestRequestor(pages_input, context, image);
+                    requestor.execute(title_input.getText().toString());
+                }
 
+            }
+        });
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

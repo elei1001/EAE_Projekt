@@ -168,6 +168,13 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
                             book.addAuthor_facet(Author);
                         }
                     }
+                    if(bookObject.has("seed")){
+                        JSONArray Seeds = bookObject.getJSONArray("seed");
+                        for (int k = 0;k<Seeds.length();k++){
+                            String Seed = Seeds.optString(k);
+                            book.addSeed(Seed);
+                        }
+                    }
 
                     bookList.addBook(book);
 
@@ -204,14 +211,11 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
         progressDialog.dismiss(); // disable progress dialog
 
         String result = Integer.toString(bookListHelper.getNumFound());
-        result = result+bookListHelper.getBookList().get(0).getPublisher();
-        resultsTextView.setVisibility(View.VISIBLE);
-        //Display data with the Textview
-        resultsTextView.setText(result);
         BookCoverRestRequestor requestor = new BookCoverRestRequestor(context,image);
+        BookDataRestRequestor requestor2 = new BookDataRestRequestor(context,resultsTextView);
 
         requestor.execute(bookListHelper.getBookList().get(0));
-
+        requestor2.execute(bookListHelper.getBookList().get(0));
 
     }
 }

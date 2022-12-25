@@ -10,6 +10,7 @@ public class Book {
     private String type;
     private String title;
     private String title_suggest;
+    private int number_of_pages;
     private int edition_count;
     private int first_publish_year;
     private int last_modified_i;
@@ -31,6 +32,14 @@ public class Book {
     private List<String> author_name = new ArrayList<>();
     private List<String> publisher_facet = new ArrayList<>();
     private List<String> author_facet = new ArrayList<>();
+
+    public int getNumber_of_pages() {
+        return number_of_pages;
+    }
+
+    public void setNumber_of_pages(int number_of_pages) {
+        this.number_of_pages = number_of_pages;
+    }
 
     public List<String> getSeed() {
         return seed;
