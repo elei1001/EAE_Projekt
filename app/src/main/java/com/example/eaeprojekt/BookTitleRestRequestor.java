@@ -126,37 +126,49 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
                     if(bookObject.has("_version_")) {
                         book.set_version_(bookObject.getLong("_version_"));
                     }
-                    /*
-                    if(bookObject.has("publisher")) {
-
-                        JSONArray PublisherObjects = bookObject.getJSONArray("publisher");
-                        for (int k = 0; k < PublisherObjects.length(); i++) {
-
+                    // Getting the String arrays is a bit more complicated.
+                    if(bookObject.has("publisher")){
+                        JSONArray PublisherList = bookObject.getJSONArray("publisher");
+                        for (int k = 0;k<PublisherList.length();k++){
+                            String Publisher = PublisherList.optString(k);
+                            //  We need to check if the string is empty here cause some Publishers are just send as "" which is useless data
+                            if(Publisher.isEmpty()!=true) {
+                                book.addPublisher(Publisher);
+                            }
                         }
-
-
                     }
 
-                    JSONArray AuthorKeyObjects = jObject.getJSONArray("author_key");
-                    for(int k = 0; k <AuthorKeyObjects.length();i++){
-                        book.addAuthor_key(AuthorKeyObjects.getString(i));
+                    if(bookObject.has("author_key")){
+                        JSONArray AuthorKeys = bookObject.getJSONArray("author_key");
+                        for (int k = 0;k<AuthorKeys.length();k++){
+                            String Author = AuthorKeys.optString(k);
+                            book.addAuthor_key(Author);
+                        }
                     }
 
-                    JSONArray AuthorNameObjects = jObject.getJSONArray("author_name");
-                    for(int k = 0; k <AuthorNameObjects.length();i++){
-                        book.addAuthor_name(AuthorNameObjects.getString(i));
+                    if(bookObject.has("author_name")){
+                        JSONArray AuthorNames = bookObject.getJSONArray("author_name");
+                        for (int k = 0;k<AuthorNames.length();k++){
+                            String Author = AuthorNames.optString(k);
+                            book.addAuthor_name(Author);
+                        }
                     }
 
-                    JSONArray PublisherFacetObjects = jObject.getJSONArray("publisher_facet");
-                    for(int k = 0; k <PublisherFacetObjects.length();i++){
-                        book.addPublisher_facet(PublisherFacetObjects.getString(i));
+                    if(bookObject.has("publisher_facet")){
+                        JSONArray PublisherFacets = bookObject.getJSONArray("publisher_facet");
+                        for (int k = 0;k<PublisherFacets.length();k++){
+                            String Publisher = PublisherFacets.optString(k);
+                            book.addPublisher_facet(Publisher);
+                        }
+                    }
+                    if(bookObject.has("author_facet")){
+                        JSONArray AuthorFacets = bookObject.getJSONArray("author_facet");
+                        for (int k = 0;k<AuthorFacets.length();k++){
+                            String Author = AuthorFacets.optString(k);
+                            book.addAuthor_facet(Author);
+                        }
                     }
 
-                    JSONArray AuthorFacetObjects = jObject.getJSONArray("author_facet");
-                    for(int k = 0; k <AuthorFacetObjects.length();i++){
-                        book.addAuthor_facet(AuthorFacetObjects.getString(i));
-                    }
-                    */
                     bookList.addBook(book);
 
                 }
@@ -192,6 +204,7 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
         progressDialog.dismiss(); // disable progress dialog
 
         String result = Integer.toString(bookListHelper.getNumFound());
+        result = result+bookListHelper.getBookList().get(0).getPublisher();
         resultsTextView.setVisibility(View.VISIBLE);
         //Display data with the Textview
         resultsTextView.setText(result);

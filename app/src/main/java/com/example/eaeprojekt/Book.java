@@ -32,6 +32,42 @@ public class Book {
     private List<String> publisher_facet = new ArrayList<>();
     private List<String> author_facet = new ArrayList<>();
 
+    public List<String> getSeed() {
+        return seed;
+    }
+
+    public List<String> getEdition_key() {
+        return edition_key;
+    }
+
+    public List<String> getPublish_date() {
+        return publish_date;
+    }
+
+    public List<Integer> getPublish_year() {
+        return publish_year;
+    }
+
+    public List<String> getPublisher() {
+        return publisher;
+    }
+
+    public List<String> getAuthor_key() {
+        return author_key;
+    }
+
+    public List<String> getAuthor_name() {
+        return author_name;
+    }
+
+    public List<String> getPublisher_facet() {
+        return publisher_facet;
+    }
+
+    public List<String> getAuthor_facet() {
+        return author_facet;
+    }
+
     public Bitmap getCoverBitmap() {
         return CoverBitmap;
     }
