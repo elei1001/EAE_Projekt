@@ -1,19 +1,20 @@
 package com.example.eaeprojekt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BookListHelper {
     int numFound;
     int start;
     boolean numFoundExact;
-    private List<Book> bookList = new ArrayList<>();
+    HashMap<String,Book> bookList= new HashMap<String,Book>();
 
     public int getNumFound() {
         return numFound;
     }
     public void addBook(Book book){
-        bookList.add(book);
+        bookList.put(book.getTitle(),book);
     }
 
     public void setNumFound(int numFound) {
@@ -36,11 +37,11 @@ public class BookListHelper {
         this.numFoundExact = numFoundExact;
     }
 
-    public List<Book> getBookList() {
+    public HashMap<String,Book> getBookList() {
         return bookList;
     }
 
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
+    public Book findBookByTitle(String title){
+        return bookList.get(title);
     }
 }

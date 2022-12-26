@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 public class AuthorSearch extends AppCompatActivity {
 
     @Override
@@ -27,7 +29,7 @@ public class AuthorSearch extends AppCompatActivity {
         displayData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BookTitleRestRequestor requestor = new BookTitleRestRequestor(resultsTextView,context,image);
+                BookTitleRestRequestor requestor = new BookTitleRestRequestor(context,resultsTextView,image);
                 //AuthorRestRequestor requestor = new AuthorRestRequestor(context,resultsTextView,resultSpinner);
                 requestor.execute(authorinfo.getText().toString());
             }

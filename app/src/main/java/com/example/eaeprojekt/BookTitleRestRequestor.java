@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -18,6 +21,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 
 
@@ -27,11 +33,19 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
     Context context;
     TextView resultsTextView;
     ImageView image;
+    Spinner ResultSpinner;
+    HashMap<String,TextView> ResultViews;
 
-    public BookTitleRestRequestor(TextView resultsTextView, Context context,ImageView image) {
+    public BookTitleRestRequestor(Context context,TextView resultsTextView,ImageView image) {
         this.resultsTextView = resultsTextView;
         this.context = context;
         this.image=image;
+    }
+    public BookTitleRestRequestor(Context context,HashMap<String,TextView> resultsTextViews,ImageView image,Spinner ResultSpinner) {
+        this.ResultSpinner=ResultSpinner;
+        this.context = context;
+        this.image=image;
+        this.ResultViews = resultsTextViews;
     }
 
     @Override
@@ -192,6 +206,7 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
+
         }
 
         return null;
@@ -210,12 +225,38 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
     protected void onPostExecute(BookListHelper bookListHelper) {
         progressDialog.dismiss(); // disable progress dialog
 
-        String result = Integer.toString(bookListHelper.getNumFound());
-        BookCoverRestRequestor requestor = new BookCoverRestRequestor(context,image);
-        BookDataRestRequestor requestor2 = new BookDataRestRequestor(context,resultsTextView);
+        if(ResultSpinner != null){
+            ArrayList<String> options=new ArrayList<String>();
+            String defaultOption = "Please Select a book";
+            options.add(defaultOption);
+            for(String bookTitle :bookListHelper.getBookList().keySet()){
+                if(bookListHelper.getBookList().get(bookTitle).getCover_i()!= 0){
+                    options.add(bookTitle);
+                }
 
-        requestor.execute(bookListHelper.getBookList().get(0));
-        requestor2.execute(bookListHelper.getBookList().get(0));
+            }
+
+            // use default spinner item to show options in spinner
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
+            ResultSpinner.setAdapter(adapter);
+
+            ResultSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (!ResultSpinner.getSelectedItem().toString().isEmpty()&&ResultSpinner.getSelectedItem().toString()!=defaultOption) {
+                        BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, image);
+                        BookDataRestRequestor requestor2 = new BookDataRestRequestor(context, ResultViews);
+                        requestor.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
+                        requestor2.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+        }
 
     }
 }
