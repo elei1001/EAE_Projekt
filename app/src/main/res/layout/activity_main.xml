@@ -7,23 +7,6 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/AuthorButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#9367E6"
-        android:clickable="true"
-        android:contentDescription="@string/app_name"
-        android:focusable="true"
-        app:backgroundTint="#9367E6"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/add_button"
-        app:rippleColor="#9367E6"
-        app:srcCompat="@drawable/ic_empty" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

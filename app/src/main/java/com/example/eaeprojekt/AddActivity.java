@@ -1,5 +1,6 @@
 package com.example.eaeprojekt;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +45,30 @@ public class AddActivity extends AppCompatActivity {
         ResultTextView.put("author",(TextView) findViewById(R.id.AddActivityAuthorText));
         ResultTextView.put("publisher",(TextView) findViewById(R.id.AddActivityPublisherText));
         ResultTextView.put("isbn",(TextView) findViewById(R.id.AddActivityISBNText));
+
+        TabLayout tabs = (TabLayout) findViewById(R.id.TabSelector);
+
+        LinearLayout TitleSearch = (LinearLayout) findViewById(R.id.TitleSearch);
+        LinearLayout AuthorSearch = (LinearLayout) findViewById(R.id.AuthorSearch);
+        tabs.addView(TitleSearch);
+        tabs.addView(AuthorSearch);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,17 +80,5 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-
-
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper DBH = new DatabaseHelper(AddActivity.this);
-                DBH.addBook(title_input.getText().toString().trim(),
-                        author_input.getText().toString().trim(),
-                        Integer.valueOf("1"));
-
-            }
-        });
     }
 }

@@ -1,5 +1,6 @@
 package com.example.eaeprojekt;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -238,8 +240,8 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
 
             // use default spinner item to show options in spinner
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
+            LinearLayout ResultLayout = ((Activity) context).findViewById(R.id.ResultLayout);
             ResultSpinner.setAdapter(adapter);
-
             ResultSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -248,6 +250,7 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
                         BookDataRestRequestor requestor2 = new BookDataRestRequestor(context, ResultViews);
                         requestor.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
                         requestor2.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
+                        ResultLayout.setVisibility(View.VISIBLE);
                     }
                 }
                 @Override
