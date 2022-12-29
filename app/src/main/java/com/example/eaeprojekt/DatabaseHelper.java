@@ -20,6 +20,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TITLE = "book_title";
     private static final String COLUMN_AUTHOR = "book_author";
     private static final String COLUMN_PAGES = "book_pages";
+    private static final String COLUMN_COVER = "book_cover";
 
 
 
@@ -34,6 +35,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_AUTHOR + " TEXT, " +
+                COLUMN_COVER + "INTEGER,"+
                 COLUMN_PAGES + " INTEGER);";
         db.execSQL(query);
     }
@@ -43,13 +45,14 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    void addBook(String title, String author, int pages ){
+    void addBook(String title, String author, int pages, int cover ){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
+        cv.put(COLUMN_COVER,cover);
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1) Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
         else Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
@@ -72,6 +75,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
+        cv.put(COLUMN_COVER,0);
 
         long result = db.update(TABLE_NAME, cv, "_id = ?", new String[]{row_id});
         if (result == -1)

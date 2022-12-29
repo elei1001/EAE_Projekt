@@ -17,14 +17,10 @@
            android:layout_height="wrap_content"
            android:padding="12dp">
 
-           <TextView
-               android:id="@+id/book_id_txt"
+           <ImageView
+               android:id="@+id/cover_id"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="1"
-               android:textColor="@color/black"
-               android:textSize="40sp"
-               android:textStyle="bold"
                app:layout_constraintBottom_toBottomOf="parent"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintTop_toTopOf="parent" />
@@ -38,8 +34,8 @@
                android:textColor="@color/black"
                android:textSize="20sp"
                android:textStyle="bold"
-               app:layout_constraintStart_toEndOf="@+id/book_id_txt"
-               app:layout_constraintTop_toTopOf="@+id/book_id_txt" />
+               app:layout_constraintStart_toEndOf="@+id/cover_id"
+               app:layout_constraintTop_toTopOf="@+id/cover_id" />
 
            <TextView
                android:id="@+id/book_author_txt"
