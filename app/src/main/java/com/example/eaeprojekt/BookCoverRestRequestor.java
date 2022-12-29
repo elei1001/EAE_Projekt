@@ -35,7 +35,6 @@ public class BookCoverRestRequestor extends AsyncTask<Book, Void, List<Book>> {
         List<Book> bookList = new ArrayList<>();
         for(Book book:books){
             String urlString = "https://covers.openlibrary.org/b/ID/" + book.getCover_i()+"-L.jpg";
-            progressDialog.setMessage(urlString);
             try {
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -56,19 +55,10 @@ public class BookCoverRestRequestor extends AsyncTask<Book, Void, List<Book>> {
         return bookList;
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        // display a progress dialog to show the user something is happening
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("processing results");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-    }
+
 
     @Override
     protected void onPostExecute(List<Book> books) {
-        progressDialog.dismiss(); // disable progress dialog
 
         image.setVisibility(View.VISIBLE);
         image.setImageBitmap(books.get(0).getCoverBitmap());

@@ -33,6 +33,38 @@ public class Book {
     private List<String> publisher_facet = new ArrayList<>();
     private List<String> author_facet = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "key='" + key + '\'' +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                ", title_suggest='" + title_suggest + '\'' +
+                ", number_of_pages=" + number_of_pages +
+                ", edition_count=" + edition_count +
+                ", first_publish_year=" + first_publish_year +
+                ", last_modified_i=" + last_modified_i +
+                ", ebook_count_i=" + ebook_count_i +
+                ", ebook_access='" + ebook_access + '\'' +
+                ", has_fulltext=" + has_fulltext +
+                ", public_scan_b=" + public_scan_b +
+                ", cover_edition_key='" + cover_edition_key + '\'' +
+                ", cover_i=" + cover_i +
+                ", _version_=" + _version_ +
+                ", CoverBitmap=" + CoverBitmap +
+                ", isbn=" + isbn +
+                ", seed=" + seed +
+                ", edition_key=" + edition_key +
+                ", publish_date=" + publish_date +
+                ", publish_year=" + publish_year +
+                ", publisher=" + publisher +
+                ", author_key=" + author_key +
+                ", author_name=" + author_name +
+                ", publisher_facet=" + publisher_facet +
+                ", author_facet=" + author_facet +
+                '}';
+    }
+
     public int getNumber_of_pages() {
         return number_of_pages;
     }

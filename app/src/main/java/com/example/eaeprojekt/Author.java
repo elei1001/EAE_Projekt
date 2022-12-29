@@ -13,12 +13,20 @@ public class Author {
     private int workCount;
     private List<String> topSubjects = new ArrayList<>();
     private List<String> alternateNames = new ArrayList<>();
+    private List<Book> AuthorBookList = new ArrayList<>();
 
     public void addTopSubject(String subject){
         this.topSubjects.add(subject);
     }
     public void addAlternateName(String name){
         this.alternateNames.add(name);
+    }
+    public void addBook(Book book){
+        this.AuthorBookList.add(book);
+    }
+
+    public List<Book> getAuthorBookList() {
+        return AuthorBookList;
     }
 
     public List<String> getTopSubjects() {

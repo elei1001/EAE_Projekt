@@ -31,7 +31,9 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> {
     Context context;
     TextView resultsTextView;
     HashMap<String,TextView> ResultViews;
-
+    ImageView image ;
+    ProgressDialog progressDialog;
+    Long LastQuoteUpdate;
 
 
 
@@ -39,9 +41,33 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> {
         this.context = context;
         this.resultsTextView = resultsTextView;
     }
+    public BookDataRestRequestor(Context context,HashMap<String,TextView> resultsTextViews,ImageView image) {
+        this.context = context;
+        this.ResultViews = resultsTextViews;
+        this.image = image;
+     }
     public BookDataRestRequestor(Context context, HashMap<String,TextView> resultsTextViews) {
         this.context = context;
         this.ResultViews = resultsTextViews;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // display a progress dialog to show the user something is happening
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Getting Book Info");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        LastQuoteUpdate = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        if(System.currentTimeMillis() -LastQuoteUpdate>5000){
+            LastQuoteUpdate = System.currentTimeMillis();
+            progressDialog.setMessage(RandomLoadingQuote.getRandomQuote());
+        }
     }
 
     @Override
@@ -65,11 +91,10 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> {
                         }
                         in.close();
                         JSONObject jObject = new JSONObject(content.toString());
-                        System.out.println(jObject);
                         if(jObject.has("number_of_pages")) {
                             book.setNumber_of_pages(jObject.getInt("number_of_pages"));
-                            break;
                         }
+                        publishProgress();
 
                     }
                 } catch (MalformedURLException | ProtocolException e) {
@@ -86,6 +111,12 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> {
 
     @Override
     protected void onPostExecute(Book[] book) {
+        progressDialog.dismiss(); // disable progress dialog
+        if(image!=null){
+            BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, image);
+            requestor.execute(book[0]);
+        }
+
         if (!ResultViews.isEmpty()){
             // set value of Views - Extensive nil checking is required
             Book ResultBook = book[0];
@@ -96,17 +127,10 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> {
             if (!ResultBook.getIsbn().isEmpty())ResultViews.get("isbn").setText(book[0].getIsbn().get(0));
 
             Button add_button = ((Activity) context).findViewById(R.id.add_button);
-            ImageView image = ((Activity) context).findViewById(R.id.ResultImageView);
-            image.buildDrawingCache();
-            Bitmap imageBitmap = image.getDrawingCache();
             add_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHelper DBH = new DatabaseHelper(context);
-                    DBH.addBook(ResultBook.getTitle().trim(),
-                            ResultBook.getAuthor_name().get(0).trim(),
-                            ResultBook.getNumber_of_pages());
-
+                    AddToDatabase.addToDatabase(context,ResultBook);
                 }
             });
 

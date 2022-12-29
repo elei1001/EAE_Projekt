@@ -1,19 +1,20 @@
 package com.example.eaeprojekt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AuthorListHelper {
     private int numFound;
     private int start;
     private boolean numFoundExact;
-    private List<Author> AuthorList = new ArrayList<>();
+    private HashMap<String,Author> AuthorList = new HashMap<>();
 
     public void addAuthor(Author author){
-        this.AuthorList.add(author);
+        this.AuthorList.put(author.getKey(), author);
     }
 
-    public List<Author> getAuthorList() {
+    public HashMap<String,Author> getAuthorList() {
         return AuthorList;
     }
 

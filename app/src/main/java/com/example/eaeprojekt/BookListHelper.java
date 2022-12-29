@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BookListHelper {
-    int numFound;
-    int start;
-    boolean numFoundExact;
-    HashMap<String,Book> bookList= new HashMap<String,Book>();
+    private int numFound;
+    private int start;
+    private boolean numFoundExact;
+    private HashMap<String,Book> bookList= new HashMap<String,Book>();
 
     public int getNumFound() {
         return numFound;

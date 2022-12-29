@@ -11,40 +11,40 @@
         android:id="@+id/TabSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="By Author" />
-
-        <com.google.android.material.tabs.TabItem
+            android:id="@+id/TitleTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="By Title" />
 
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/AuthorTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By Author" />
+
     </com.google.android.material.tabs.TabLayout>
+
 
     <LinearLayout
         android:id="@+id/SearchContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="30dp"
-        app:layout_constraintHeight_percent="0.30">
+        app:layout_constraintHeight_percent="0.30"
+        app:layout_constraintTop_toBottomOf="@id/TabSelector"
+        tools:layout_editor_absoluteX="30dp">
 
         <LinearLayout
             android:id="@+id/TitleSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintBaseline_toBottomOf="@id/TabSelector">
+            app:layout_constraintTop_toBottomOf="parent"
+            tools:visibility="gone">
 
             <EditText
                 android:id="@+id/title_input"
@@ -71,7 +71,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintBaseline_toBottomOf="@id/TabSelector">
+            app:layout_constraintTop_toBottomOf="@id/TabSelector"
+            tools:visibility="visible">
 
             <EditText
                 android:id="@+id/author_input"
@@ -84,24 +85,23 @@
                 android:minHeight="48dp" />
 
             <Button
-                android:id="@+id/searchForAuthor_Button"
+                android:id="@+id/SearchForAuthor_Button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:text="Search"
                 android:textAllCaps="false"
                 android:textSize="20sp" />
+
         </LinearLayout>
     </LinearLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/AddActivityResults"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintHeight_percent="0.70"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/SearchContainer"
-
         tools:layout_editor_absoluteX="30dp">
 
         <Spinner
@@ -122,8 +122,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/add_button"
-            app:layout_constraintHeight_percent="0.50"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Title_Selector">
 
 
@@ -248,7 +247,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
                                 android:text="Not Available" />
+
                         </LinearLayout>
+
+                        <Button
+                            android:id="@+id/add_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:text="Add"
+                            android:textAllCaps="false"
+                            android:textSize="20sp" />
 
                     </LinearLayout>
                 </ScrollView>
@@ -256,15 +264,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/add_button"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:text="Add"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

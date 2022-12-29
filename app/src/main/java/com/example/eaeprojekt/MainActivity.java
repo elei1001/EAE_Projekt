@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1); // TODO this function is deprecated and needs to be fixed sometime soon but a quick way to reload once something was added
+
             }
         });
 
