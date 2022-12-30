@@ -115,18 +115,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i){
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
+                dbh.deleteAllData();
+                //Refresh Activity
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
-                dbh.deleteAllData();
-                //Refresh Activity
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
         builder.create().show();
