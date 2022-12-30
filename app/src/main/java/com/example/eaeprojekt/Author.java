@@ -3,6 +3,9 @@ package com.example.eaeprojekt;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents an author with various attributes and methods for manipulating those attributes.
+ */
 public class Author {
     private String key;
     private String type;

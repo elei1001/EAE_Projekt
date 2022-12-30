@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-public class AuthorSearch extends AppCompatActivity {
+public class AuthorSearch extends AppCompatActivity { // DEPRACATED should be removed in future version or expanded upon
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

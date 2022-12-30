@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This class extends AsyncTask to fetch author data from the OpenLibrary API.
+ */
 public class AuthorRestRequestor extends AsyncTask<String, Void, AuthorListHelper>  {
     ProgressDialog progressDialog;
     Context context;

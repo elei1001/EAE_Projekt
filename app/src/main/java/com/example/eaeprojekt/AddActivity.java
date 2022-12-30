@@ -22,23 +22,35 @@ import java.util.HashMap;
 
 public class AddActivity extends AppCompatActivity {
 
-    EditText title_input, author_input, pages_input;
+    EditText title_input, author_input;
     Button add_button;
-    public static BookListHelper bookList = new BookListHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // setup view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        // get views and context
         title_input = findViewById(R.id.title_input);
         author_input = findViewById(R.id.author_input);
         add_button = findViewById(R.id.add_button);
-
         ImageView image = (ImageView) findViewById(R.id.AddActivityBookCover);
-        Context context = this;
         Spinner TitleSelector = (Spinner) findViewById(R.id.Title_Selector);
-        HashMap<String,TextView> ResultTextView = new HashMap<String,TextView>();
         ConstraintLayout Result = (ConstraintLayout) findViewById(R.id.AddActivityResults);
+        Context context = this;
+        TabLayout tabs = (TabLayout) findViewById(R.id.TabSelector);
+        LinearLayout TitleSearch = (LinearLayout) findViewById(R.id.TitleSearch);
+        LinearLayout AuthorSearch = (LinearLayout) findViewById(R.id.AuthorSearch);
+        Button TitleSearchButton = (Button) findViewById(R.id.SearchForBook_Button);
+        Button AuthorSearchButton = (Button) findViewById(R.id.SearchForAuthor_Button);
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_author_selector, null);
+        Spinner AutorSpinner = (Spinner) popupView.findViewById(R.id.author_Popup_Selector);
+
+        // create hashmap for views
+        HashMap<String,TextView> ResultTextView = new HashMap<String,TextView>();
         // add all the views to the map
         ResultTextView.put("pages",(TextView) findViewById(R.id.AddActivityPagesText));
         ResultTextView.put("title",(TextView) findViewById(R.id.AddActivityTitleText));
@@ -46,14 +58,12 @@ public class AddActivity extends AppCompatActivity {
         ResultTextView.put("publisher",(TextView) findViewById(R.id.AddActivityPublisherText));
         ResultTextView.put("isbn",(TextView) findViewById(R.id.AddActivityISBNText));
 
-        TabLayout tabs = (TabLayout) findViewById(R.id.TabSelector);
-
-        LinearLayout TitleSearch = (LinearLayout) findViewById(R.id.TitleSearch);
-        LinearLayout AuthorSearch = (LinearLayout) findViewById(R.id.AuthorSearch);
+        // setup tab listener to create Tab view
+        // TODO fix this to not be as badly handled
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getText().toString().contains("Author")){
+                if(tab.getText().toString().contains("Author")){ // this is a dirty hardcoded hack and should be changed
                     TitleSearch.setVisibility(View.GONE);
                     AuthorSearch.setVisibility(View.VISIBLE);
                 }
@@ -65,7 +75,7 @@ public class AddActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if(tab.getText().toString().contains("Author")){
+                if(tab.getText().toString().contains("Author")){ // this is a dirty hardcoded hack and should be changed
                     TitleSearch.setVisibility(View.GONE);
                     AuthorSearch.setVisibility(View.VISIBLE);
                 }
@@ -77,7 +87,7 @@ public class AddActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                if(tab.getText().toString().contains("Author")){
+                if(tab.getText().toString().contains("Author")){ // this is a dirty hardcoded hack and should be changed
                     TitleSearch.setVisibility(View.GONE);
                     AuthorSearch.setVisibility(View.VISIBLE);
                 }
@@ -88,36 +98,39 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        Button TitleSearchButton = (Button) findViewById(R.id.SearchForBook_Button);
+        // setup on click listener for the title searchButton
         TitleSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!title_input.getText().toString().isEmpty()) {
-                    BookTitleRestRequestor requestor = new BookTitleRestRequestor(context,ResultTextView, image,TitleSelector);
+                if(!title_input.getText().toString().isEmpty()) { //nil checking here so we don't send empty request which might result in an error
+                    // sending request
+                    BookTitleRestRequestor requestor = new BookTitleRestRequestor(context,ResultTextView, image,TitleSelector); // TODO this should be changed to work via callbacks and not require sending all the atributes that need to be changed as parameters
                     requestor.execute(title_input.getText().toString());
-                    Result.setVisibility(View.VISIBLE);
+
+                    Result.setVisibility(View.VISIBLE); // result view is hidden at start enabling it here
                 }
             }
         });
-
-        Button AuthorSearchButton = (Button) findViewById(R.id.SearchForAuthor_Button);
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_author_selector, null);
-        Spinner AutorSpinner = (Spinner) popupView.findViewById(R.id.author_Popup_Selector);
-        AuthorSearchButton.setOnClickListener(new View.OnClickListener() {
+        // setup on click listener for the Author searchButton
+       AuthorSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!author_input.getText().toString().isEmpty()) {
+                if(!author_input.getText().toString().isEmpty()) { //nil checking here so we don't send empty request which might result in an error
+                    // since we're displaying the Author dropdown as a Popup we need to gather some additional data
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                     int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                     boolean focusable = true; // lets taps outside the popup also dismiss it
+
+                    // create the popup
                     PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
                     popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+                    //setting Visibility of result views
                     Result.setVisibility(View.VISIBLE);
                     AutorSpinner.setVisibility(View.VISIBLE);
-                    AuthorRestRequestor requestor = new AuthorRestRequestor(context,AutorSpinner,image,ResultTextView,popupWindow);
+
+                    // sending request
+                    AuthorRestRequestor requestor = new AuthorRestRequestor(context,AutorSpinner,image,ResultTextView,popupWindow); // TODO this should be changed to work via callbacks and not require sending all the atributes that need to be changed as parameters
                     requestor.execute(author_input.getText().toString());
                 }
             }

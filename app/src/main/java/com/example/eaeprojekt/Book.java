@@ -34,7 +34,7 @@ public class Book {
     private List<String> author_facet = new ArrayList<>();
 
     @Override
-    public String toString() {
+    public String toString() { // for testing purposes
         return "Book{" +
                 "key='" + key + '\'' +
                 ", type='" + type + '\'' +

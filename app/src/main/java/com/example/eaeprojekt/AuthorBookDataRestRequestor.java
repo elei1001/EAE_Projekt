@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+    /**
+     *This class extends AsyncTask to retrieve book data for an author asynchronously.
+     */
 public class AuthorBookDataRestRequestor extends AsyncTask<Author,  Void, HashMap<String,Book>>{ // <InObject,ProgressObject,PostProgressObject)
     Context context;
     HashMap<String, TextView> ResultViews;

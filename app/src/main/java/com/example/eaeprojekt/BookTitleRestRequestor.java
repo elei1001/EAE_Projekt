@@ -30,7 +30,7 @@ import java.util.Locale;
 
 
 
-public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelper> {
+public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelper> { // <InputValue,ProgressUpdateValue,toPostExecuteValue>
     ProgressDialog progressDialog;
     Context context;
     TextView resultsTextView;
@@ -58,18 +58,15 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
         title = title.replace(" ","%20");
         String urlString = "https://openlibrary.org/search.json?title=" + title;
 
-        //DEBUG
-        progressDialog.setMessage(urlString);
 
         try {
             // create url from input data and open connection
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            if (con.getResponseCode() == 200) {
-                // Success
-
+            if (con.getResponseCode() == 200) {// Success
                 BookListHelper bookList = new BookListHelper(); // create booklist
+
                 // create Json String from input and convert it to JSonObject
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String inputLine;
@@ -99,7 +96,7 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
                 con.disconnect(); // close connection
                 return bookList;
             } else {
-                // Error handling code goes here
+                // TODO add proper Error handling
             }
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -120,7 +117,7 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
         super.onPreExecute();
         // display a progress dialog to show the user something is happening
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("processing results");
+        progressDialog.setMessage("Requesting Book Data");
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
@@ -129,10 +126,11 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
         progressDialog.dismiss(); // disable progress dialog
 
         if(ResultSpinner != null){
+            // creating array with book options to choose from
             ArrayList<String> options=new ArrayList<String>();
             String defaultOption = "Please Select a book";
             options.add(defaultOption);
-            for(String bookTitle :bookListHelper.getBookList().keySet()){
+            for(String bookTitle :bookListHelper.getBookList().keySet()){ // since Hashmap doesn't have a foreach we use this dirty hack instead of manually iterating via for loop
                 if(bookListHelper.getBookList().get(bookTitle).getCover_i()!= 0){
                     options.add(bookTitle);
                 }
@@ -141,22 +139,22 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
 
             // use default spinner item to show options in spinner
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
-            LinearLayout ResultLayout = ((Activity) context).findViewById(R.id.ResultLayout);
+            LinearLayout ResultLayout = ((Activity) context).findViewById(R.id.ResultLayout); // we need to cast context to an activity here so we can use fiendvieybyid
             ResultSpinner.setAdapter(adapter);
             ResultSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (!ResultSpinner.getSelectedItem().toString().isEmpty()&&ResultSpinner.getSelectedItem().toString()!=defaultOption) {
-                        BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, image);
-                        BookDataRestRequestor requestor2 = new BookDataRestRequestor(context, ResultViews);
+                    if (!ResultSpinner.getSelectedItem().toString().isEmpty()&&ResultSpinner.getSelectedItem().toString()!=defaultOption) { // checking if option is neither empty nor the "please select book" prompt we added earlier
+                        BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, image); // technically we don't need this but since we have the data for the book already this is just a quicker way to request both cover and data at the same time
+                        BookDataRestRequestor requestor2 = new BookDataRestRequestor(context, ResultViews); // since we only care about Number_of_pages and throw everything else away we do not need to care about threadsave data structures for cover_i
                         requestor.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
                         requestor2.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
-                        ResultLayout.setVisibility(View.VISIBLE);
+                        ResultLayout.setVisibility(View.VISIBLE); // since resultLayout is initially hidden we need to show it
                     }
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-
+                    //TODO add proper error handling
                 }
             });
 

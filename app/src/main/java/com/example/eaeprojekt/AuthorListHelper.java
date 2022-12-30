@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class represents a list of authors and their metadata.
+ */
 public class AuthorListHelper {
     private int numFound;
     private int start;
