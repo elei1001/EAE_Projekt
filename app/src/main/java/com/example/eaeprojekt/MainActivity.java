@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FloatingActionButton add_button;
-    ImageView empty_imageview;
     TextView no_data;
 
     DatabaseHelper dbH;
@@ -40,15 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         add_button = findViewById(R.id.add_button);
-        empty_imageview = findViewById(R.id.empty_imageView);
         no_data = findViewById(R.id.no_data);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1); // TODO this function is deprecated and needs to be fixed sometime soon but a quick way to reload once something was added
+
             }
         });
+
+
 
         dbH = new DatabaseHelper(MainActivity.this);
         book_id = new ArrayList<>();
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     void storeDataInArrays(){
         Cursor cursor = dbH.readAllData();
         if (cursor.getCount() == 0) {
-            empty_imageview.setVisibility(View.VISIBLE);
             no_data.setVisibility(View.VISIBLE);
         }
         else {
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 book_title.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
             }
-            empty_imageview.setVisibility(View.GONE);
             no_data.setVisibility(View.GONE);
         }
     }
@@ -112,18 +111,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i){
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
+                dbh.deleteAllData();
+                //Refresh Activity
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
-                dbh.deleteAllData();
-                //Refresh Activity
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
         builder.create().show();
