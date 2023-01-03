@@ -72,14 +72,9 @@ public class AuthorRestRequestor extends AsyncTask<String, Void, AuthorListHelpe
     @Override
     protected void onPostExecute(AuthorListHelper authorListHelper) {
         progressDialog.dismiss(); // disable progress dialog
-        /*
-        String result = Integer.toString(authorListHelper.getNumFound())+authorListHelper.getAuthorList().get(0).getTopSubjects().get(0);
-        resultsTextView.setVisibility(View.VISIBLE);
-        //Display data with the Textview
-        resultsTextView.setText(result);
-        */
-        ArrayList<String> options=new ArrayList<String>();
 
+        //setup Spinner options
+        ArrayList<String> options=new ArrayList<String>();
         String defaultOption = "Please Select an Author";
         options.add(defaultOption);
         HashMap<String,String> ResultMap= new HashMap<>();
@@ -122,12 +117,12 @@ public class AuthorRestRequestor extends AsyncTask<String, Void, AuthorListHelpe
     @Override
     protected AuthorListHelper doInBackground(String... strings) {
         for(String author:strings){
+            //prepare author for url request
             author = author.toLowerCase(Locale.ROOT);
             author = author.replace(" ","%20");
             String urlString = "https://openlibrary.org/search/authors.json?q=" + author;
-            System.out.println(urlString);
-            progressDialog.setMessage(urlString);
             try {
+                // open url connection
                 URL url = new URL(urlString);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
@@ -192,6 +187,7 @@ public class AuthorRestRequestor extends AsyncTask<String, Void, AuthorListHelpe
                         }
                         authorList.addAuthor(authorToAdd);
                     }
+                    con.disconnect();
                     return authorList;
                 }
             } catch (MalformedURLException | ProtocolException e) {

@@ -17,12 +17,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please Select Your Author" />
+            android:text="Please Select Your Author"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <Spinner
             android:id="@+id/author_Popup_Selector"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:minWidth="80dp"
             android:spinnerMode="dialog"
             android:translationY="200dp" />
 

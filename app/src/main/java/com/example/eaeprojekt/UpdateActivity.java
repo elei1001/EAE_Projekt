@@ -41,6 +41,7 @@ public class UpdateActivity extends AppCompatActivity {
                 DatabaseHelper dbH = new DatabaseHelper(UpdateActivity.this);
                 reloadData();
                 dbH.updateData(id, title, author, pages);
+                finish();
             }
         });
 
