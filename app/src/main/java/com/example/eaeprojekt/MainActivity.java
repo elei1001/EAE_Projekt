@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Optionsmenü für "Alles löschen?"
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -103,11 +104,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Dialog um sicher zu gehen das man auch wirklich alle daten löschen möchte
     void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete All?");
-        builder.setMessage("Are you sure you want to delete all Data?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setTitle("Alles löschen?");
+        builder.setMessage("Sind Sie sicher das Sie wirklich Alles löschen möchten?");
+        //wenn Ja, werden alle Daten gelöscht und die App lädt neu
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i){
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
@@ -118,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        //wenn Nein dann schließt sich das Fenster und die Daten bleiben bestehen
+        builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

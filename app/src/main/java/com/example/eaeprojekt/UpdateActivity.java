@@ -34,6 +34,7 @@ public class UpdateActivity extends AppCompatActivity {
         if (ab != null)
             ab.setTitle(title);
 
+        //wenn man nach eintragen der neuen Daten auf Update klickt werden die Daten in der Datenbank geändert
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +43,8 @@ public class UpdateActivity extends AppCompatActivity {
                 dbH.updateData(id, title, author, pages);
             }
         });
+
+        //wenn man auf Löschen clickt wird das Buch aus der Datenbank entfernt
         delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +79,7 @@ public class UpdateActivity extends AppCompatActivity {
         pages = pages_input.getText().toString().trim();
     }
 
+    //kleiner Dialog um sicher zu gehen das man auch wirklich das gewählte Element löschen möchte
     void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete " + title + "?");
