@@ -29,6 +29,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
+    //Erstellen der Datenbank mit allen wichtigen Daten für die App
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
@@ -45,6 +46,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
+    //ein neues Buch in die Datenbank einfügen
     void addBook(String title, String author, int pages , int picture){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -54,10 +57,13 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PAGES, pages);
         cv.put(COLUMN_PICTURES, picture);
         long result = db.insert(TABLE_NAME, null, cv);
-        if(result == -1) Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
+        //wenn es nicht funktioniert wird ein Toast gezeigt der "Fehlgeschlagen!" sagt
+        //wenn es funktioniert wird ein Toast gezeigt der "erfolgreich hinzugefügt!" sagt
+        if(result == -1) Toast.makeText(context, "Fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(context, "Erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
     }
 
+    //alle Daten in der Datenbank werden ausgelesen
     Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -69,6 +75,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    //wenn man manuell die Daten abändert werden sie hier auch in der Datenbank geändert und abgespeichert
     void updateData(String row_id, String title, String author, String pages) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -77,21 +84,28 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PAGES, pages);
 
         long result = db.update(TABLE_NAME, cv, "_id = ?", new String[]{row_id});
+        //wenn es nicht funktioniert wird ein Toast gezeigt der "Ändern fehlgeschlagen!" sagt
+        //wenn es funktioniert wird ein Toast gezeigt der "Es wurden [Anzahl Einträge] Einträge erfolgreich geändert!" sagt
         if (result == -1)
-            Toast.makeText(context, "Failed to Update", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Ändern fehlgeschlagen!", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Succesfully updated "+result+" entries ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Es wurden " + result + " Einträge erfolgreich geändert! ",
+                    Toast.LENGTH_SHORT).show();
     }
 
+    //wenn man ein Buch löscht werden die Daten auch aus der Datenbank entfernt
     void deleteOneRow(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_NAME, "_id = ?", new String[]{row_id});
+        //wenn es nicht funktioniert wird ein Toast gezeigt der "Löschen fehlgeschlagen!" sagt
+        //wenn es funktioniert wird ein Toast gezeigt der "Löschen erfolgreich!" sagt
         if(result == -1)
-            Toast.makeText(context, "Failed to Delete!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Löschen fehlgeschlagen!", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Successfully deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Löschen erfolgreich!", Toast.LENGTH_SHORT).show();
     }
 
+    //alle Daten werden aus der Datenbank entfernt
     void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME);
