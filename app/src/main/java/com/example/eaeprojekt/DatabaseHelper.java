@@ -20,6 +20,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TITLE = "book_title";
     private static final String COLUMN_AUTHOR = "book_author";
     private static final String COLUMN_PAGES = "book_pages";
+    private static final String COLUMN_PICTURES = "book_picture";
 
 
 
@@ -34,7 +35,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_AUTHOR + " TEXT, " +
-                COLUMN_PAGES + " INTEGER);";
+                COLUMN_PAGES + " INTEGER, " +
+                COLUMN_PICTURES + "INTEGER);";
         db.execSQL(query);
     }
 
@@ -43,13 +45,14 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    void addBook(String title, String author, int pages ){
+    void addBook(String title, String author, int pages , int picture){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
+        cv.put(COLUMN_PICTURES, picture);
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1) Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
         else Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
