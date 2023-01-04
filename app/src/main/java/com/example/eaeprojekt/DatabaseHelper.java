@@ -37,7 +37,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_AUTHOR + " TEXT, " +
                 COLUMN_PAGES + " INTEGER, " +
-                COLUMN_PICTURES + "INTEGER);";
+                COLUMN_PICTURES + " INTEGER);";
         db.execSQL(query);
     }
 
