@@ -118,7 +118,7 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> { // <I
 
         if (!ResultViews.isEmpty()){
             // set value of Views - Extensive nil checking is required
-            Book ResultBook = book[0]; // we throw away all books thta are not the first result because it's the only thing we care about for ease of use
+            Book ResultBook = book[0]; // we throw away all books that are not the first result because it's the only thing we care about for ease of use
             if (ResultBook.getNumber_of_pages()!=0) ResultViews.get("pages").setText(Integer.toString(book[0].getNumber_of_pages()));
             if (!ResultBook.getTitle().isEmpty())ResultViews.get("title").setText(book[0].getTitle());
             if (!ResultBook.getAuthor_name().isEmpty())ResultViews.get("author").setText(book[0].getAuthor_name().get(0));
