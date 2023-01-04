@@ -17,6 +17,15 @@
            android:layout_height="wrap_content"
            android:padding="12dp">
 
+           <ImageView
+               android:id="@+id/book_cover_img"
+               android:layout_width="45dp"
+               android:layout_height="45dp"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               tools:srcCompat="@tools:sample/avatars" />
+
            <TextView
                android:id="@+id/book_id_txt"
                android:layout_width="wrap_content"
