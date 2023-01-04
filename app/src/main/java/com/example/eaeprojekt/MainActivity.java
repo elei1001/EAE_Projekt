@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     TextView no_data;
 
     DatabaseHelper dbH;
-    ArrayList<String> book_id, book_title, book_author, book_pages;
+    ArrayList<String> book_id, book_title, book_author, book_pages,book_covers;
     CustomAdapter customAdapter;
 
     @Override
@@ -56,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
         book_title = new ArrayList<>();
         book_author = new ArrayList<>();
         book_pages = new ArrayList<>();
+        book_covers = new ArrayList<>();
+
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this, this, book_id, book_title, book_author, book_pages);
+        customAdapter = new CustomAdapter(MainActivity.this, this, book_id, book_title, book_author, book_pages,book_covers);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 book_author.add(cursor.getString(1));
                 book_title.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
+                book_covers.add(cursor.getString(4));
             }
             no_data.setVisibility(View.GONE);
         }
