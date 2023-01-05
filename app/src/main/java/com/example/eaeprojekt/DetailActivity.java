@@ -45,7 +45,7 @@ public class DetailActivity extends AppCompatActivity {
 
         detail_picture = findViewById(R.id.detail_picture);
 
-        //readSwitch = findViewById(R.id.detail_readSwitch);
+        readSwitch = findViewById(R.id.detail_readSwitch);
 
         getAndSetIntentData();
         ActionBar ab =getSupportActionBar();
