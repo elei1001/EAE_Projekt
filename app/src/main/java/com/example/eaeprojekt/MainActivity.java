@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         dbH = new DatabaseHelper(MainActivity.this);
         book_id = new ArrayList<>();
         book_title = new ArrayList<>();
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -84,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             while (cursor.moveToNext()) {
                 book_id.add(cursor.getString(0));
-                book_author.add(cursor.getString(1));
-                book_title.add(cursor.getString(2));
+                book_title.add(cursor.getString(1));
+                book_author.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
                 book_covers.add(cursor.getString(4));
                 Integer readstatus = cursor.getInt(5);
@@ -146,5 +150,7 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+
 
 }
