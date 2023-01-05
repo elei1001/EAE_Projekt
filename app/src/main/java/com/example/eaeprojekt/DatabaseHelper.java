@@ -88,16 +88,13 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //wenn man manuell die Daten abändert werden sie hier auch in der Datenbank geändert und abgespeichert
-    void updateData(String row_id, String title, String author, String pages,boolean readstatus, String edition, String isbn, int jahr) {
+    void updateData(String row_id, String title, String author, String pages,boolean readstatus) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
         cv.put(COLUMN_READSTATUS,readstatus);
-        cv.put(COLUMN_EDITION, edition);
-        cv.put(COLUMN_ISBN, isbn);
-        cv.put(COLUMN_YEAR, jahr);
 
         long result = db.update(TABLE_NAME, cv, "_id = ?", new String[]{row_id});
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Ändern fehlgeschlagen!" sagt
