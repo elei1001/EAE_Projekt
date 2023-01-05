@@ -62,8 +62,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, cv);
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "erfolgreich hinzugefügt!" sagt
-        if(result == -1) Toast.makeText(context, "Fehlgeschlagen!", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(context, "Erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
+        if(result == -1) Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show();
     }
 
     //alle Daten in der Datenbank werden ausgelesen
@@ -91,9 +91,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Ändern fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "Es wurden [Anzahl Einträge] Einträge erfolgreich geändert!" sagt
         if (result == -1)
-            Toast.makeText(context, "Ändern fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Update failed!", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Es wurden " + result + " Einträge erfolgreich geändert! ",
+            Toast.makeText(context, result + " changes have been made! ",
                     Toast.LENGTH_SHORT).show();
     }
 
@@ -104,9 +104,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Löschen fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "Löschen erfolgreich!" sagt
         if(result == -1)
-            Toast.makeText(context, "Löschen fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Deleting failed!", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Löschen erfolgreich!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Delete succesful!", Toast.LENGTH_SHORT).show();
     }
 
     //alle Daten werden aus der Datenbank entfernt

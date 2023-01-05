@@ -99,10 +99,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Buch Löschen?");
-        builder.setMessage("Sind Sie sicher das Sie das Buch wirklich löschen möchten?");
+        builder.setTitle("Delete " + title + "?");
+        builder.setMessage("Are you sure you want to delete " + title + "?");
         //wenn Ja, wird das Buch gelöscht und die App lädt neu
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i){
                 DatabaseHelper dbh = new DatabaseHelper(DetailActivity.this);
@@ -114,7 +114,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         //wenn Nein dann schließt sich das Fenster und die Daten bleiben bestehen
-        builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

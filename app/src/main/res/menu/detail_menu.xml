@@ -4,11 +4,11 @@
     <item
         android:id="@+id/edit_item"
         android:icon="@drawable/ic_edit"
-        android:title="Bearbeiten"
+        android:title="Update"
         app:showAsAction="never"> </item>
     <item
         android:id="@+id/delete_item"
         android:icon="@drawable/ic_delete"
-        android:title="Buch löschen?"
+        android:title="Delete book ?"
         app:showAsAction="never"> </item>
 </menu>
