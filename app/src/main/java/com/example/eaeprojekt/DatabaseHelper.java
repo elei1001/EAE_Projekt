@@ -21,6 +21,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_AUTHOR = "book_author";
     private static final String COLUMN_PAGES = "book_pages";
     private static final String COLUMN_PICTURES = "book_picture";
+    private static final String COLUMN_READSTATUS = "book_read";
 
 
 
@@ -37,7 +38,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_AUTHOR + " TEXT, " +
                 COLUMN_PAGES + " INTEGER, " +
-                COLUMN_PICTURES + " INTEGER);";
+                COLUMN_PICTURES + " INTEGER, " +
+                COLUMN_READSTATUS + " INTEGER);";
         db.execSQL(query);
     }
 
@@ -56,6 +58,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
         cv.put(COLUMN_PICTURES, picture);
+        cv.put(COLUMN_READSTATUS,0);
         long result = db.insert(TABLE_NAME, null, cv);
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "erfolgreich hinzugefügt!" sagt
@@ -76,12 +79,13 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //wenn man manuell die Daten abändert werden sie hier auch in der Datenbank geändert und abgespeichert
-    void updateData(String row_id, String title, String author, String pages) {
+    void updateData(String row_id, String title, String author, String pages,boolean readstatus) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
+        cv.put(COLUMN_READSTATUS,readstatus);
 
         long result = db.update(TABLE_NAME, cv, "_id = ?", new String[]{row_id});
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Ändern fehlgeschlagen!" sagt

@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +17,8 @@ public class UpdateActivity extends AppCompatActivity {
 
     EditText title_input, author_input, pages_input;
     Button update_button, delete_button;
-
+    Switch readSwitch;
+    Boolean ReadStatus;
     String id, title, author, pages;
 
     @Override
@@ -28,6 +31,7 @@ public class UpdateActivity extends AppCompatActivity {
         pages_input = findViewById(R.id.pages_input2);
         update_button = findViewById(R.id.update_button);
         delete_button = findViewById(R.id.delete_button);
+        readSwitch = findViewById(R.id.read_status_switch);
 
         getAndSetIntentData();
         ActionBar ab =getSupportActionBar();
@@ -40,7 +44,7 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DatabaseHelper dbH = new DatabaseHelper(UpdateActivity.this);
                 reloadData();
-                dbH.updateData(id, title, author, pages);
+                dbH.updateData(id, title, author, pages, ReadStatus);
                 finish();
             }
         });
@@ -57,17 +61,20 @@ public class UpdateActivity extends AppCompatActivity {
 
     void getAndSetIntentData() {
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title")
-                && getIntent().hasExtra("author") && getIntent().hasExtra("pages")) {
+                && getIntent().hasExtra("author") && getIntent().hasExtra("pages") && getIntent().hasExtra("read")) {
             //Getting Data from Intent
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
             author = getIntent().getStringExtra("author");
             pages = getIntent().getStringExtra("pages");
-
+            ReadStatus = getIntent().getBooleanExtra("read",false);
             //Setting Intent Data
             title_input.setText(title);
             author_input.setText(author);
             pages_input.setText(pages);
+            System.out.println(ReadStatus);
+            readSwitch.setChecked(ReadStatus);
+
 
         } else {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
@@ -78,6 +85,7 @@ public class UpdateActivity extends AppCompatActivity {
         title = title_input.getText().toString().trim();
         author = author_input.getText().toString().trim();
         pages = pages_input.getText().toString().trim();
+        ReadStatus = readSwitch.isChecked();
     }
 
     //kleiner Dialog um sicher zu gehen das man auch wirklich das gewählte Element löschen möchte

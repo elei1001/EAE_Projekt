@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper dbH;
     ArrayList<String> book_id, book_title, book_author, book_pages,book_covers;
+    ArrayList<Boolean>book_read;
     CustomAdapter customAdapter;
 
     @Override
@@ -57,11 +58,12 @@ public class MainActivity extends AppCompatActivity {
         book_author = new ArrayList<>();
         book_pages = new ArrayList<>();
         book_covers = new ArrayList<>();
+        book_read = new ArrayList<>();
 
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this, this, book_id, book_title, book_author, book_pages,book_covers);
+        customAdapter = new CustomAdapter(MainActivity.this, this, book_id, book_title, book_author, book_pages,book_covers,book_read);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -86,6 +88,18 @@ public class MainActivity extends AppCompatActivity {
                 book_title.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
                 book_covers.add(cursor.getString(4));
+                Integer readstatus = cursor.getInt(5);
+                System.out.println("-----------------READSTATUS-----------------");
+                System.out.println(readstatus);
+                if(readstatus == 1){
+                    book_read.add(true);
+
+                }
+                else{
+                    System.out.println("setting status to false");
+                    book_read.add(false);
+                }
+
             }
             no_data.setVisibility(View.GONE);
         }

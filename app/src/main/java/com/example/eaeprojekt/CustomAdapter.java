@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,11 +23,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private Context context;
     private Activity activity;
-    private ArrayList book_id, book_author, book_title, book_pages,book_cover;
+    private ArrayList book_id, book_author, book_title, book_pages,book_cover,book_read;
     private Animation translate_animation;
 
     CustomAdapter(Activity activity,  Context context, ArrayList book_id, ArrayList book_title,
-                  ArrayList book_author, ArrayList book_pages, ArrayList book_cover){
+                  ArrayList book_author, ArrayList book_pages, ArrayList book_cover, ArrayList book_read){
         this.activity = activity;
         this.context = context;
         this.book_id = book_id;
@@ -33,6 +35,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.book_author = book_author;
         this.book_pages = book_pages;
         this.book_cover = book_cover;
+        this.book_read = book_read;
     }
 
     @NonNull
@@ -49,6 +52,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.book_title_txt.setText(String.valueOf(book_title.get(holder.getAdapterPosition())));
         holder.book_author_txt.setText(String.valueOf(book_author.get(holder.getAdapterPosition())));
         holder.book_pages_txt.setText(String.valueOf(book_pages.get(holder.getAdapterPosition())));
+        holder.read_status.setChecked((Boolean)book_read.get(holder.getAdapterPosition()));
         Book bookToGetCoverFor = new Book();
         bookToGetCoverFor.setCover_i(Integer.valueOf(String.valueOf(book_cover.get(holder.getAdapterPosition()))));
         BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, holder.book_cover_img);
@@ -61,6 +65,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 intent.putExtra("title", String.valueOf(book_title.get(holder.getAdapterPosition())));
                 intent.putExtra("author", String.valueOf(book_author.get(holder.getAdapterPosition())));
                 intent.putExtra("pages", String.valueOf(book_pages.get(holder.getAdapterPosition())));
+                intent.putExtra("read", (Boolean) book_read.get(holder.getAdapterPosition()));
                 activity.startActivityForResult(intent, 1);
             }
         });
@@ -76,6 +81,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView book_id_txt, book_title_txt, book_author_txt, book_pages_txt;
+        CheckBox read_status;
         ImageView book_cover_img;
         LinearLayout mainLayout;
 
@@ -87,6 +93,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             book_pages_txt = itemView.findViewById(R.id.book_pages_txt);
             book_cover_img = itemView.findViewById(R.id.book_cover_img);
             mainLayout = itemView.findViewById(R.id.mainLayout);
+            read_status= itemView.findViewById(R.id.book_read_status);
             //Animation RecyclerView
             translate_animation = AnimationUtils.loadAnimation(context, R.anim.translate_animation);
             mainLayout.setAnimation(translate_animation);
