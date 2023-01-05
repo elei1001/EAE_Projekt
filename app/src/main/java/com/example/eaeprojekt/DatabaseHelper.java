@@ -22,6 +22,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PAGES = "book_pages";
     private static final String COLUMN_PICTURES = "book_picture";
     private static final String COLUMN_READSTATUS = "book_read";
+    private static final String COLUMN_ISBN = "isbn";
+    private static final String COLUMN_YEAR = "year";
+    private static final String COLUMN_EDITION = "edition";
 
 
 
@@ -39,6 +42,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_AUTHOR + " TEXT, " +
                 COLUMN_PAGES + " INTEGER, " +
                 COLUMN_PICTURES + " INTEGER, " +
+                COLUMN_ISBN + " TEXT, " +
+                COLUMN_EDITION + " TEXT, " +
+                COLUMN_YEAR + " INTEGER, " +
                 COLUMN_READSTATUS + " INTEGER);";
         db.execSQL(query);
     }
@@ -50,7 +56,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //ein neues Buch in die Datenbank einfügen
-    void addBook(String title, String author, int pages , int picture){
+    void addBook(String title, String author, int pages , int picture, int jahr, String edition, String isbn){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -58,12 +64,15 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_AUTHOR, author);
         cv.put(COLUMN_PAGES, pages);
         cv.put(COLUMN_PICTURES, picture);
+        cv.put(COLUMN_EDITION, edition);
+        cv.put(COLUMN_ISBN, isbn);
+        cv.put(COLUMN_YEAR, jahr);
         cv.put(COLUMN_READSTATUS,0);
         long result = db.insert(TABLE_NAME, null, cv);
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "erfolgreich hinzugefügt!" sagt
-        if(result == -1) Toast.makeText(context, "Fehlgeschlagen!", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(context, "Erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
+        if(result == -1) Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show();
     }
 
     //alle Daten in der Datenbank werden ausgelesen
@@ -91,9 +100,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Ändern fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "Es wurden [Anzahl Einträge] Einträge erfolgreich geändert!" sagt
         if (result == -1)
-            Toast.makeText(context, "Ändern fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Update failed!", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Es wurden " + result + " Einträge erfolgreich geändert! ",
+            Toast.makeText(context, result + " changes have been made! ",
                     Toast.LENGTH_SHORT).show();
     }
 
@@ -104,9 +113,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
         //wenn es nicht funktioniert wird ein Toast gezeigt der "Löschen fehlgeschlagen!" sagt
         //wenn es funktioniert wird ein Toast gezeigt der "Löschen erfolgreich!" sagt
         if(result == -1)
-            Toast.makeText(context, "Löschen fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Deleting failed!", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Löschen erfolgreich!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Delete succesful!", Toast.LENGTH_SHORT).show();
     }
 
     //alle Daten werden aus der Datenbank entfernt

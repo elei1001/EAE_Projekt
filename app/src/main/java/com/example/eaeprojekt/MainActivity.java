@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
     //Dialog um sicher zu gehen das man auch wirklich alle daten löschen möchte
     void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Alles löschen?");
-        builder.setMessage("Sind Sie sicher das Sie wirklich Alles löschen möchten?");
+        builder.setTitle("Delete everything?");
+        builder.setMessage("Are you sure you want to delete everything?");
         //wenn Ja, werden alle Daten gelöscht und die App lädt neu
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i){
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //wenn Nein dann schließt sich das Fenster und die Daten bleiben bestehen
-        builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

@@ -17,7 +17,7 @@ public class AddToDatabase {
         // Add the book to the database using the database helper
         DBH.addBook(ResultBook.getTitle().trim(),
                 ResultBook.getAuthor_name().get(0).trim(),
-                ResultBook.getNumber_of_pages(),ResultBook.getCover_i());
+                ResultBook.getNumber_of_pages(),ResultBook.getCover_i(),ResultBook.getFirst_publish_year(),ResultBook.getEdition_key().get(0),ResultBook.getIsbn().get(0));
         ((Activity) context).finish(); // Finish the activity
     }
 }

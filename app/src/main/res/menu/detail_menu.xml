@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/edit_item"
+        android:icon="@drawable/ic_edit"
+        android:title="Update"
+        app:showAsAction="never"> </item>
+    <item
+        android:id="@+id/delete_item"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete book ?"
+        app:showAsAction="never"> </item>
+</menu>

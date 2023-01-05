@@ -69,6 +69,14 @@ public class JsonToBookConverter {
             }
         }
 
+        if (bookObject.has("edition_key")) {
+            JSONArray EditionList = bookObject.getJSONArray("edition_key");
+            for (int k = 0; k < EditionList.length(); k++) {
+                String Edition = EditionList.optString(k);
+                book.addEdition_key(Edition);
+            }
+        }
+
         if (bookObject.has("author_key")) {
             JSONArray AuthorKeys = bookObject.getJSONArray("author_key");
             for (int k = 0; k < AuthorKeys.length(); k++) {

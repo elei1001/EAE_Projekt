@@ -104,7 +104,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, UpdateActivity.class);
+                Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("id", String.valueOf(book_id.get(holder.getAdapterPosition())));
                 intent.putExtra("title", String.valueOf(book_title.get(holder.getAdapterPosition())));
                 intent.putExtra("author", String.valueOf(book_author.get(holder.getAdapterPosition())));
