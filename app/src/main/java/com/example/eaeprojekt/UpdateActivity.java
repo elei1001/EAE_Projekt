@@ -72,7 +72,6 @@ public class UpdateActivity extends AppCompatActivity {
             title_input.setText(title);
             author_input.setText(author);
             pages_input.setText(pages);
-            System.out.println(ReadStatus);
             readSwitch.setChecked(ReadStatus);
 
 
