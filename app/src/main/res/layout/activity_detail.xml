@@ -17,7 +17,6 @@
         android:textSize="28sp"
         android:text="Title"
         android:gravity="center"
-        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +31,6 @@
         android:text="Author"
         android:textSize="18sp"
         android:gravity="left"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_title" />
@@ -63,7 +61,6 @@
         android:gravity="left"
         android:textSize="18sp"
         android:hint="not availabe"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_author" />
@@ -106,7 +103,6 @@
         android:textSize="18sp"
         android:hint="not availabe"
         android:gravity="left"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_publish_year" />
@@ -137,7 +133,6 @@
         android:textSize="18sp"
         android:gravity="left"
         android:hint="not availabe"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_pages" />
@@ -169,7 +164,6 @@
         android:gravity="left"
         android:textSize="18sp"
         android:hint="not availabe"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_edition" />
