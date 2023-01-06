@@ -51,36 +51,32 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar ab =getSupportActionBar();
         if (ab != null)
             ab.setTitle(title);
+
+
     }
 
     void getAndSetIntentData() {
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title")
-                && getIntent().hasExtra("author") && getIntent().hasExtra("pages")
-                && getIntent().hasExtra("read") && getIntent().hasExtra("edition")
-                && getIntent().hasExtra("year") && getIntent().hasExtra("isbn")) {
+                && getIntent().hasExtra("author") && getIntent().hasExtra("pages") && getIntent().hasExtra("read")) {
             //Getting Data from Intent
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
             author = getIntent().getStringExtra("author");
             pages = getIntent().getStringExtra("pages");
             readStatus = getIntent().getBooleanExtra("read", false);
-            edition = getIntent().getStringExtra("edition");
-            year = getIntent().getStringExtra("year");
-            isbn = getIntent().getStringExtra("isbn");
             //Setting Intent Data
             detail_title.setText(title);
             detail_author.setText(author);
             detail_pages.setText(pages);
             readSwitch.setChecked(readStatus);
-            detail_year.setText(year);
-            detail_isbn.setText(isbn);
-            detail_edition.setText(edition);
 
 
         } else {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     //Optionsmenu um Buch aus Detailansicht zu bearbeiten oder zu löschen
     @Override
