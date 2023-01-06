@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     TextView no_data;
 
     DatabaseHelper dbH;
-    ArrayList<String> book_id, book_title, book_author, book_pages,book_covers;
+    ArrayList<String> book_id, book_title, book_author, book_pages,book_covers,book_edition,book_isbn;
+    ArrayList<Integer> book_year;
     ArrayList<Boolean>book_read;
     CustomAdapter customAdapter;
 
@@ -61,11 +62,15 @@ public class MainActivity extends AppCompatActivity {
         book_pages = new ArrayList<>();
         book_covers = new ArrayList<>();
         book_read = new ArrayList<>();
+        book_edition = new ArrayList<>();
+        book_isbn = new ArrayList<>();
+        book_year = new ArrayList<>();
+
 
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this, this, book_id, book_title, book_author, book_pages,book_covers,book_read);
+        customAdapter = new CustomAdapter(MainActivity.this, this, book_id, book_title, book_author, book_pages,book_covers,book_read,book_edition,book_isbn,book_year);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -93,10 +98,12 @@ public class MainActivity extends AppCompatActivity {
                 book_author.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
                 book_covers.add(cursor.getString(4));
-                Integer readstatus = cursor.getInt(5);
+                book_isbn.add(cursor.getString(5));
+                book_edition.add(cursor.getString(6));
+                book_year.add(cursor.getInt(7));
+                Integer readstatus = cursor.getInt(8);
                 if(readstatus == 1){
                     book_read.add(true);
-
                 }
                 else{
                     book_read.add(false);

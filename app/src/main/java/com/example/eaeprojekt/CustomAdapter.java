@@ -27,11 +27,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private Context context;
     private Activity activity;
-    private ArrayList book_id, book_author, book_title, book_pages,book_cover,book_read;
+    private ArrayList book_id, book_author, book_title, book_pages,book_cover,book_read,book_edition,book_isbn,book_year ;
     private Animation translate_animation;
 
     CustomAdapter(Activity activity,  Context context, ArrayList book_id, ArrayList book_title,
-                  ArrayList book_author, ArrayList book_pages, ArrayList book_cover, ArrayList book_read){
+                  ArrayList book_author, ArrayList book_pages, ArrayList book_cover, ArrayList book_read,ArrayList book_edition,ArrayList book_isbn,ArrayList book_year){
         this.activity = activity;
         this.context = context;
         this.book_id = book_id;
@@ -40,6 +40,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.book_pages = book_pages;
         this.book_cover = book_cover;
         this.book_read = book_read;
+        this.book_edition = book_edition;
+        this.book_isbn = book_isbn;
+        this.book_year = book_year;
     }
 
     @NonNull
@@ -110,6 +113,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 intent.putExtra("author", String.valueOf(book_author.get(holder.getAdapterPosition())));
                 intent.putExtra("pages", String.valueOf(book_pages.get(holder.getAdapterPosition())));
                 intent.putExtra("read", (Boolean) book_read.get(holder.getAdapterPosition()));
+                intent.putExtra("edition", String.valueOf(book_edition.get(holder.getAdapterPosition())));
+                intent.putExtra("year", (Integer)book_year.get(holder.getAdapterPosition()));
+                intent.putExtra("isbn", String.valueOf(book_isbn.get(holder.getAdapterPosition())));
                 activity.startActivityForResult(intent, 1);
             }
         });

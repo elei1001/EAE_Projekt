@@ -93,6 +93,14 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.edit_item) {
            Intent intent = new Intent(DetailActivity.this, UpdateActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("title", title);
+            intent.putExtra("author", author);
+            intent.putExtra("pages", pages);
+            intent.putExtra("read", readStatus);
+            intent.putExtra("edition", edition);
+            intent.putExtra("year", year);
+            intent.putExtra("isbn", isbn);
            startActivity(intent);
         }
         if(item.getItemId() == R.id.delete_item){
