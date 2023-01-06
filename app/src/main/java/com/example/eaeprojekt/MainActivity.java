@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
             recreate();
     }
 
-    void storeDataInArrays(){
+
+    private void storeDataInArrays(){
         Cursor cursor = dbH.readAllData();
         if (cursor.getCount() == 0) {
             no_data.setVisibility(View.VISIBLE);
@@ -93,14 +94,11 @@ public class MainActivity extends AppCompatActivity {
                 book_pages.add(cursor.getString(3));
                 book_covers.add(cursor.getString(4));
                 Integer readstatus = cursor.getInt(5);
-                System.out.println("-----------------READSTATUS-----------------");
-                System.out.println(readstatus);
                 if(readstatus == 1){
                     book_read.add(true);
 
                 }
                 else{
-                    System.out.println("setting status to false");
                     book_read.add(false);
                 }
 

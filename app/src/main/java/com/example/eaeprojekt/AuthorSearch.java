@@ -29,7 +29,7 @@ public class AuthorSearch extends AppCompatActivity { // DEPRACATED should be re
         displayData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BookTitleRestRequestor requestor = new BookTitleRestRequestor(context,resultsTextView,image);
+                BookTitleRestRequestor requestor = new BookTitleRestRequestor(context);
                 //AuthorRestRequestor requestor = new AuthorRestRequestor(context,resultsTextView,resultSpinner);
                 requestor.execute(authorinfo.getText().toString());
             }

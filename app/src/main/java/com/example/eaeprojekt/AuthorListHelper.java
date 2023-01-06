@@ -13,6 +13,16 @@ public class AuthorListHelper {
     private boolean numFoundExact;
     private HashMap<String,Author> AuthorList = new HashMap<>();
 
+    @Override
+    public String toString() {
+        return "AuthorListHelper{" +
+                "numFound=" + numFound +
+                ", start=" + start +
+                ", numFoundExact=" + numFoundExact +
+                ", AuthorList=" + AuthorList +
+                '}';
+    }
+
     public void addAuthor(Author author){
         this.AuthorList.put(author.getKey(), author);
     }

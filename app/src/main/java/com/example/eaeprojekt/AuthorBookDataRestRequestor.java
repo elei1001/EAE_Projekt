@@ -1,6 +1,7 @@
 package com.example.eaeprojekt;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.Image;
 import android.os.AsyncTask;
@@ -35,20 +36,22 @@ import java.util.List;
      */
 public class AuthorBookDataRestRequestor extends AsyncTask<Author,  Void, HashMap<String,Book>>{ // <InObject,ProgressObject,PostProgressObject)
     Context context;
-    HashMap<String, TextView> ResultViews;
-    Spinner ResultSpinner;
-    ImageView image;
-    PopupWindow popupWindow;
+    ProgressDialog progressDialog;
 
-    public AuthorBookDataRestRequestor(Context context,HashMap<String,TextView> resultView, Spinner spinner,ImageView image,PopupWindow popupWindow) {
+    public AuthorBookDataRestRequestor(Context context) {
         this.context = context;
-        this.ResultViews = resultView;
-        this.ResultSpinner = spinner;
-        this.image = image;
-        this.popupWindow = popupWindow;
 
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // display a progress dialog to show the user something is happening
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("processing results");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
     @Override
     protected HashMap<String,Book> doInBackground(Author... authors) {
         List<Author> authorList = new ArrayList<>();
@@ -133,39 +136,7 @@ public class AuthorBookDataRestRequestor extends AsyncTask<Author,  Void, HashMa
 
     @Override
     protected void onPostExecute(HashMap<String,Book> bookList) {
-        if(ResultSpinner != null){
-            ArrayList<String> options=new ArrayList<String>();
-            String defaultOption = "Please Select a book";
-            options.add(defaultOption);
-            for(String bookTitle :bookList.keySet()){
-                System.out.println(bookList.get(bookTitle));
-                if(bookList.get(bookTitle).getCover_i()!= 0) {
-                    options.add(bookTitle);
-                }
-
-            }
-
-            // use default spinner item to show options in spinner
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
-            LinearLayout ResultLayout = ((Activity) context).findViewById(R.id.ResultLayout);
-            ResultLayout.setVisibility(View.VISIBLE);
-            popupWindow.dismiss();
-            ResultSpinner.setAdapter(adapter);
-            ResultSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    System.out.println("Spinner changin");
-                    if (!ResultSpinner.getSelectedItem().toString().isEmpty()&&ResultSpinner.getSelectedItem().toString()!=defaultOption) {
-                        BookDataRestRequestor requestor = new BookDataRestRequestor(context, ResultViews,image);
-                        requestor.execute(bookList.get(ResultSpinner.getSelectedItem().toString()));
-                    }
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-        }
+        progressDialog.dismiss(); // disable progress dialog
+        ((AddActivity)context).returnAuthorBookData(bookList);
     }
 }

@@ -71,7 +71,6 @@ public class DetailActivity extends AppCompatActivity {
             detail_title.setText(title);
             detail_author.setText(author);
             detail_pages.setText(pages);
-            System.out.println(readStatus);
             readSwitch.setChecked(readStatus);
             detail_year.setText(year);
             detail_isbn.setText(isbn);

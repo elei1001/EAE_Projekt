@@ -33,22 +33,11 @@ import java.util.Locale;
 public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelper> { // <InputValue,ProgressUpdateValue,toPostExecuteValue>
     ProgressDialog progressDialog;
     Context context;
-    TextView resultsTextView;
-    ImageView image;
-    Spinner ResultSpinner;
-    HashMap<String,TextView> ResultViews;
 
-    public BookTitleRestRequestor(Context context,TextView resultsTextView,ImageView image) {
-        this.resultsTextView = resultsTextView;
+    public BookTitleRestRequestor(Context context) {
         this.context = context;
-        this.image=image;
     }
-    public BookTitleRestRequestor(Context context,HashMap<String,TextView> resultsTextViews,ImageView image,Spinner ResultSpinner) {
-        this.ResultSpinner=ResultSpinner;
-        this.context = context;
-        this.image=image;
-        this.ResultViews = resultsTextViews;
-    }
+
 
     @Override
     protected BookListHelper doInBackground(String... params) {
@@ -124,41 +113,7 @@ public class BookTitleRestRequestor extends AsyncTask<String, Void, BookListHelp
     @Override
     protected void onPostExecute(BookListHelper bookListHelper) {
         progressDialog.dismiss(); // disable progress dialog
-
-        if(ResultSpinner != null){
-            // creating array with book options to choose from
-            ArrayList<String> options=new ArrayList<String>();
-            String defaultOption = "Please Select a book";
-            options.add(defaultOption);
-            for(String bookTitle :bookListHelper.getBookList().keySet()){ // since Hashmap doesn't have a foreach we use this dirty hack instead of manually iterating via for loop
-                if(bookListHelper.getBookList().get(bookTitle).getCover_i()!= 0){
-                    options.add(bookTitle);
-                }
-
-            }
-
-            // use default spinner item to show options in spinner
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
-            LinearLayout ResultLayout = ((Activity) context).findViewById(R.id.ResultLayout); // we need to cast context to an activity here so we can use fiendvieybyid
-            ResultSpinner.setAdapter(adapter);
-            ResultSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (!ResultSpinner.getSelectedItem().toString().isEmpty()&&ResultSpinner.getSelectedItem().toString()!=defaultOption) { // checking if option is neither empty nor the "please select book" prompt we added earlier
-                        BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, image); // technically we don't need this but since we have the data for the book already this is just a quicker way to request both cover and data at the same time
-                        BookDataRestRequestor requestor2 = new BookDataRestRequestor(context, ResultViews); // since we only care about Number_of_pages and throw everything else away we do not need to care about threadsave data structures for cover_i
-                        requestor.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
-                        requestor2.execute(bookListHelper.getBookList().get(ResultSpinner.getSelectedItem().toString()));
-                        ResultLayout.setVisibility(View.VISIBLE); // since resultLayout is initially hidden we need to show it
-                    }
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    //TODO add proper error handling
-                }
-            });
-
-        }
+        ((AddActivity)context).returnBookListData(bookListHelper);
 
     }
 }

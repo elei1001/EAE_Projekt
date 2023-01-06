@@ -2,6 +2,9 @@ package com.example.eaeprojekt;
 
 import android.app.Activity;
 import android.content.Context;
+
+import java.util.Objects;
+
 /**
  * This class provides a method for adding a book to the database.
  */

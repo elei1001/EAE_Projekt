@@ -38,25 +38,12 @@ import java.util.Locale;
 public class AuthorRestRequestor extends AsyncTask<String, Void, AuthorListHelper>  {
     ProgressDialog progressDialog;
     Context context;
-    TextView resultsTextView;
-    Spinner resultSpinner;
-    ImageView image;
-    HashMap<String,TextView> ResultViews;
-    PopupWindow popupWindow;
 
 
-    public AuthorRestRequestor(Context context, TextView resultsTextView, Spinner resultSpinner) {
+    public AuthorRestRequestor(Context context) {
         this.context = context;
-        this.resultsTextView = resultsTextView;
-        this.resultSpinner = resultSpinner;
     }
-    public AuthorRestRequestor(Context context, Spinner resultSpinner,ImageView image, HashMap<String,TextView> resultViews,PopupWindow popupWindow) {
-        this.context = context;
-        this.resultSpinner = resultSpinner;
-        this.image = image;
-        this.ResultViews = resultViews;
-        this.popupWindow = popupWindow;
-    }
+
 
 
     @Override
@@ -72,46 +59,8 @@ public class AuthorRestRequestor extends AsyncTask<String, Void, AuthorListHelpe
     @Override
     protected void onPostExecute(AuthorListHelper authorListHelper) {
         progressDialog.dismiss(); // disable progress dialog
+        ((AddActivity)context).returnAuthorInfo(authorListHelper);
 
-        //setup Spinner options
-        ArrayList<String> options=new ArrayList<String>();
-        String defaultOption = "Please Select an Author";
-        options.add(defaultOption);
-        HashMap<String,String> ResultMap= new HashMap<>();
-        for(String author:authorListHelper.getAuthorList().keySet()){
-            Author authorToAdd = authorListHelper.getAuthorList().get(author);
-            if(authorToAdd.getWorkCount()>0) {
-                if(ResultMap.get(authorToAdd.getName())==null){
-                ResultMap.put(authorToAdd.getName(),authorToAdd.getKey());
-                options.add(authorToAdd.getName());
-                }
-                else {
-                    Author oldAuthor = authorListHelper.getAuthorList().get(ResultMap.get(authorToAdd.getName()));
-                    if (oldAuthor.getWorkCount()<authorToAdd.getWorkCount()){
-                        ResultMap.put(authorToAdd.getName(),authorToAdd.getKey());
-                    }
-                }
-            }
-        }
-
-        // use default spinner item to show options in spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
-        resultSpinner.setAdapter(adapter);
-        resultSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (resultSpinner.getSelectedItem().toString() != defaultOption){
-                Author selectedAuthor = authorListHelper.getAuthorList().get(ResultMap.get(resultSpinner.getSelectedItem().toString()));
-                AuthorBookDataRestRequestor requestor = new AuthorBookDataRestRequestor(context,ResultViews,((Activity)context).findViewById(R.id.Title_Selector),image,popupWindow);
-                requestor.execute(selectedAuthor);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     @Override

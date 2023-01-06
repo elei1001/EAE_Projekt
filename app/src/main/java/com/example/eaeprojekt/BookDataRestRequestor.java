@@ -29,27 +29,15 @@ import java.util.List;
 
 public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> { // <Input type , progress update type, onPostExecute type>
     Context context; // the context of the calling activitz
-    TextView resultsTextView; // DEPRACATED old way a simple search was implemented
-    HashMap<String,TextView> ResultViews; // a Map of all the views that show book information, can be expanded upon to display more data
-    ImageView image ; // the imageView the resulting book cover is to be displayed in
     ProgressDialog progressDialog;
     Long LastQuoteUpdate; // timestamp of Quote updates
 
 
 
-    public BookDataRestRequestor(Context context, TextView resultsTextView) { // DEPRACATED old way a simple search was implemented
+    public BookDataRestRequestor(Context context) {
         this.context = context;
-        this.resultsTextView = resultsTextView;
     }
-    public BookDataRestRequestor(Context context,HashMap<String,TextView> resultsTextViews,ImageView image) {
-        this.context = context;
-        this.ResultViews = resultsTextViews;
-        this.image = image;
-     }
-    public BookDataRestRequestor(Context context, HashMap<String,TextView> resultsTextViews) {
-        this.context = context;
-        this.ResultViews = resultsTextViews;
-    }
+
 
     @Override
     protected void onPreExecute() {  // display a progress dialog to show the user something is happening
@@ -111,34 +99,6 @@ public class BookDataRestRequestor extends AsyncTask<Book, Void, Book[]> { // <I
     @Override
     protected void onPostExecute(Book[] book) {
         progressDialog.dismiss(); // disable progress dialog
-        if(image!=null){ // check if image view exist, if yes send request for Cover Image
-            BookCoverRestRequestor requestor = new BookCoverRestRequestor(context, image);
-            requestor.execute(book[0]);
-        }
-
-        if (!ResultViews.isEmpty()){
-            // set value of Views - Extensive nil checking is required
-            Book ResultBook = book[0]; // we throw away all books that are not the first result because it's the only thing we care about for ease of use
-            if (ResultBook.getNumber_of_pages()!=0) ResultViews.get("pages").setText(Integer.toString(book[0].getNumber_of_pages()));
-            if (!ResultBook.getTitle().isEmpty())ResultViews.get("title").setText(book[0].getTitle());
-            if (!ResultBook.getAuthor_name().isEmpty())ResultViews.get("author").setText(book[0].getAuthor_name().get(0));
-            if (!ResultBook.getPublisher().isEmpty())ResultViews.get("publisher").setText(book[0].getPublisher().get(0));
-            if (!ResultBook.getIsbn().isEmpty())ResultViews.get("isbn").setText(book[0].getIsbn().get(0));
-
-            // set Add Buttons on click depending on earlier gathered data
-            Button add_button = ((Activity) context).findViewById(R.id.add_button);
-            add_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AddToDatabase.addToDatabase(context,ResultBook);
-                }
-            });
-
-        }
-        // DEPRACATED old way of handling simple search
-        else if(resultsTextView!= null){
-            resultsTextView.setVisibility(View.VISIBLE);
-            resultsTextView.setText(Integer.toString(book[0].getNumber_of_pages()));
-        }
+        ((AddActivity)context).returnBookData(book);
     }
 }
