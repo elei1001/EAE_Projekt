@@ -1,6 +1,7 @@
 package com.example.eaeprojekt;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,10 @@ import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+/* Die Update Activity sorgt dafür das man die Daten eines Biches auch ändern kann
+ * Änderbare Daten sind: Titel, Author, Anzahl der Seiten und ob man das Buch gelesen hat
+ */
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -45,6 +50,8 @@ public class UpdateActivity extends AppCompatActivity {
                 DatabaseHelper dbH = new DatabaseHelper(UpdateActivity.this);
                 reloadData();
                 dbH.updateData(id, title, author, pages, ReadStatus);
+                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -59,6 +66,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     }
 
+    //sorgt dafür das die Daten geholt und gesetzt werden können
     void getAndSetIntentData() {
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title")
                 && getIntent().hasExtra("author") && getIntent().hasExtra("pages") && getIntent().hasExtra("read")) {
@@ -97,6 +105,8 @@ public class UpdateActivity extends AppCompatActivity {
            public void onClick(DialogInterface dialogInterface, int i){
                DatabaseHelper dbh = new DatabaseHelper(UpdateActivity.this);
                dbh.deleteOneRow(id);
+               Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+               startActivity(intent);
                finish();
            }
         });

@@ -21,13 +21,12 @@ public class DetailActivity extends AppCompatActivity {
 
     TextView detail_title, detail_author, detail_pages;
     String id, title, author, pages;
-
-    Switch readSwitch;
-    boolean readStatus;
-
     TextView detail_year, detail_isbn, detail_edition;
     ImageView detail_picture;
     String year, isbn, edition;
+
+    Switch readSwitch;
+    boolean readStatus;
 
 
     @Override
@@ -38,11 +37,9 @@ public class DetailActivity extends AppCompatActivity {
         detail_title = findViewById(R.id.detail_title);
         detail_author = findViewById(R.id.detail_author);
         detail_pages = findViewById(R.id.detail_pages);
-
         detail_edition = findViewById(R.id.detail_edition);
         detail_isbn = findViewById(R.id.detail_isbn);
         detail_year = findViewById(R.id.detail_publish_year);
-
         detail_picture = findViewById(R.id.detail_picture);
 
         readSwitch = findViewById(R.id.detail_readSwitch);
@@ -75,8 +72,6 @@ public class DetailActivity extends AppCompatActivity {
             detail_year.setText(year);
             detail_isbn.setText(isbn);
             detail_edition.setText(edition);
-
-
         } else {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
@@ -119,7 +114,7 @@ public class DetailActivity extends AppCompatActivity {
                 DatabaseHelper dbh = new DatabaseHelper(DetailActivity.this);
                 dbh.deleteOneRow(id);
                 //Refresh Activity
-                Intent intent = new Intent(DetailActivity.this, DetailActivity.class);
+                Intent intent = new Intent(DetailActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
