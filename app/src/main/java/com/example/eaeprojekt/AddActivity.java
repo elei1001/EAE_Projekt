@@ -164,7 +164,7 @@ public class AddActivity extends AppCompatActivity {
         }
 
         // use default spinner item to show options in spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,options);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,options);
         AutorSpinner.setAdapter(adapter);
         AutorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,7 +195,7 @@ public class AddActivity extends AppCompatActivity {
 
         }
         // use default spinner item to show options in spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_dropdown_item,options);
         TitleSelector.setAdapter(adapter);
         TitleSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -252,7 +252,7 @@ public class AddActivity extends AppCompatActivity {
             }
 
             // use default spinner item to show options in spinner
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,options);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_dropdown_item,options);
             LinearLayout ResultLayout = ((Activity) context).findViewById(R.id.ResultLayout); // we need to cast context to an activity here so we can use fiendvieybyid
             TitleSelector.setAdapter(adapter);
             TitleSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
