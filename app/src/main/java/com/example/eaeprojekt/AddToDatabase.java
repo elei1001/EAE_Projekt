@@ -16,11 +16,34 @@ public class AddToDatabase {
      */
     public static void addToDatabase(Context context, Book ResultBook){
         DatabaseHelper DBH = new DatabaseHelper(context); // Create a new database helper object
+        String author_Name,title,edition,isbn;
+        Integer pages,picture,year;
+        if(!ResultBook.getTitle().isEmpty()){
+            title = ResultBook.getTitle().trim();
+        }else title = "not Available";
+        if(!ResultBook.getAuthor_name().isEmpty()){
+            author_Name = ResultBook.getAuthor_name().get(0).trim();
+        }else author_Name = "not Available";
+        if(ResultBook.getNumber_of_pages()!=0){
+            pages = ResultBook.getNumber_of_pages();
+        }else pages = 0;
+        if(ResultBook.getCover_i()!=0){
+            picture = ResultBook.getCover_i();
+        }else picture = 0;
+        if(ResultBook.getFirst_publish_year()!=0){
+            year= ResultBook.getFirst_publish_year();
+        }else year = 0;
+        if(!ResultBook.getEdition_key().isEmpty()){
+            edition = ResultBook.getEdition_key().get(0);
+        }else edition = "not Available";
+        if(ResultBook.getIsbn().isEmpty()){
+            isbn= ResultBook.getIsbn().get(0);
+        }else isbn = "not Available";
+
+
 
         // Add the book to the database using the database helper
-        DBH.addBook(ResultBook.getTitle().trim(),
-                ResultBook.getAuthor_name().get(0).trim(),
-                ResultBook.getNumber_of_pages(),ResultBook.getCover_i(),ResultBook.getFirst_publish_year(),ResultBook.getEdition_key().get(0),ResultBook.getIsbn().get(0));
+        DBH.addBook(title, author_Name, pages,picture,year,edition,isbn);
         ((Activity) context).finish(); // Finish the activity
     }
 }

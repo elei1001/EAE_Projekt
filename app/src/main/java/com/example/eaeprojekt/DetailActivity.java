@@ -41,7 +41,6 @@ public class DetailActivity extends AppCompatActivity {
         detail_isbn = findViewById(R.id.detail_isbn);
         detail_year = findViewById(R.id.detail_publish_year);
         detail_picture = findViewById(R.id.detail_picture);
-
         readSwitch = findViewById(R.id.detail_readSwitch);
 
         getAndSetIntentData();
@@ -54,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title")
                 && getIntent().hasExtra("author") && getIntent().hasExtra("pages")
                 && getIntent().hasExtra("read") && getIntent().hasExtra("edition")
-                && getIntent().hasExtra("year") && getIntent().hasExtra("isbn")) {
+                && getIntent().hasExtra("year") && getIntent().hasExtra("isbn")&& getIntent().hasExtra("cover_i")) {
             //Getting Data from Intent
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
@@ -65,6 +64,13 @@ public class DetailActivity extends AppCompatActivity {
             year = getIntent().getStringExtra("year");
             isbn = getIntent().getStringExtra("isbn");
             //Setting Intent Data
+            Integer cover_i = getIntent().getIntExtra("cover_i",0);
+            if(cover_i!=0) {
+                Book book = new Book();
+                book.setCover_i(cover_i);
+                BookCoverRestRequestor requestor = new BookCoverRestRequestor(this, detail_picture);
+                requestor.execute(book);
+            }
             detail_title.setText(title);
             detail_author.setText(author);
             detail_pages.setText(pages);
